@@ -82,32 +82,47 @@ const getVehicles = async (
 
   return { meta: { total, page, limit }, data };
 };
-
-const availableVehicles = async (
-  pickUpDateTime: string,
-): Promise<Vehicle[]> => {
-  // Query all booked drivers for the provided date
-  const bookedVehicleIds = (
-    await prisma.booking.findMany({
-      where: {
-        pickUpDateTime,
-      },
-      select: {
-        vehicleId: true,
-      },
-    })
-  ).map(booking => booking.vehicleId);
-
-  // Query available drivers by excluding booked drivers
-  const availableVehicale = await prisma.vehicle.findMany({
-    where: {
-      id: {
-        notIn: bookedVehicleIds,
-      },
-    },
+const getAllVehicles = async () => {
+  const allVehicles = await prisma.vehicle.findMany({});
+  const totalVehicle = await prisma.vehicle.count({});
+  const availeVehicle = await prisma.vehicle.count({
+    where: { status: 'Available' },
+  });
+  const resreveVehicle = await prisma.vehicle.count({
+    where: { status: 'In_A_Trip' },
   });
 
-  return availableVehicale;
+  return { data: { totalVehicle, availeVehicle, resreveVehicle, allVehicles } };
+};
+
+const availableVehicles = async (): Promise<Vehicle[]> => {
+  const availableVehicles = await prisma.vehicle.findMany({
+    where: {
+      status: 'Available',
+    },
+  });
+  // Query all booked drivers for the provided date
+  // const bookedVehicleIds = (
+  //   await prisma.booking.findMany({
+  //     where: {
+  //       pickUpDateTime,
+  //     },
+  //     select: {
+  //       vehicleId: true,
+  //     },
+  //   })
+  // ).map(booking => booking.vehicleId);
+
+  // // Query available drivers by excluding booked drivers
+  // const availableVehicale = await prisma.vehicle.findMany({
+  //   where: {
+  //     id: {
+  //       notIn: bookedVehicleIds,
+  //     },
+  //   },
+  // });
+
+  return availableVehicles;
 };
 
 const updateVehicle = async (
@@ -138,4 +153,5 @@ export const VehicleService = {
   updateVehicle,
   availableVehicles,
   deleteVehicle,
+  getAllVehicles,
 };

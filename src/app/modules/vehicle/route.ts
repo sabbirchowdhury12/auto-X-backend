@@ -14,6 +14,7 @@ const {
   getVehicles,
   updateVehicle,
   availableVehicles,
+  getAllVehicles,
 } = VehicleController;
 
 router
@@ -23,14 +24,16 @@ router
     validateRequest(ZCreateVehicle),
     createVehicle,
   )
+  .get('/available', availableVehicles)
+  .get('/dashboard', getAllVehicles)
   .patch(
     '/:id',
     auth(ADMIN, SUPER_ADMIN),
     validateRequest(ZUpdateVehicle),
     updateVehicle,
   )
-  .get('/:id', getVehicle)
+
   .get('/', getVehicles)
-  .get('/freeVehicle', availableVehicles);
+  .get('/:id', getVehicle);
 
 export const VehicleRoutes = router;

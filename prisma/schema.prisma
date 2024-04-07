@@ -28,43 +28,29 @@ enum EDriverStatus {
   On_Vacation
 }
 
-enum ERentType {
-  Daily
-  Weekly
-  Monthly
-}
+
 
 enum EFuelType {
   LPG
   CNG
   Petrol
   Diesel
-  Gasoline
-  Kerosene
 }
 
 enum EVehicleType {
-  S
+
   M
   L
   XL
   XXL
-  XXXL
+
 }
 
 enum EVehicleBrand {
   Toyota
-  Hyundai
   Audi
-  Proton
-  Mitsubishi
   BMW
-  Suzuki
-  Subaru
   Nissan
-  Mercedes
-  Mazda
-  Honda
 }
 
 enum EVehicleStatus {
@@ -77,21 +63,14 @@ enum EVehicleStatus {
 enum EBookingStatus {
   Pending
   Approved
-  In_Trip
   End
 }
 
 enum EPaymentStatus {
   Unpaid
-  Partial
   Paid
 }
 
-enum ERentStatus {
-  Pending
-  Active
-  End
-}
 
 model User {
   id String @id @default(uuid())
@@ -123,8 +102,6 @@ model Driver {
   user   User   @relation(fields: [userId], references: [id])
 
   vehicle  Vehicle?
-  rents    Rent[]
-  bookings Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -193,18 +170,12 @@ model Booking {
   returnDateTime  DateTime
   pickUpLocation  String
   dropOffLocation String
-  rentType        ERentType
+  pickUpTime      String
   bookingStatus   EBookingStatus @default(Pending)
   paymentStatus   EPaymentStatus @default(Unpaid)
 
   vehicleId String
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
-
-  rent    Rent?
-  promoId String?
-
-  driverId String
-  driver   Driver @relation(fields: [driverId], references: [id])
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -215,28 +186,3 @@ model Booking {
   @@map("bookings")
 }
 
-model Rent {
-  id String @id @default(uuid())
-
-  downPayment        Int?
-  discount           Int?
-  startTime          DateTime    @db.Date
-  endTime            DateTime    @db.Date
-  overTime           DateTime?   @db.Date
-  damageCompensation Int?
-  refund             Int?
-  totalCost          Int
-  rentType           ERentType   @default(Daily)
-  rentStatus         ERentStatus @default(Pending)
-
-  bookingId String @unique
-
-  booking  Booking @relation(fields: [bookingId], references: [id])
-  driverId String
-  driver   Driver  @relation(fields: [driverId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("rents")
-}

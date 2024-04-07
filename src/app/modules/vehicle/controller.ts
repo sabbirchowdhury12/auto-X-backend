@@ -30,10 +30,12 @@ const getVehicle = catchAsync(async (req: Request, res: Response) => {
 });
 
 const availableVehicles = catchAsync(async (req: Request, res: Response) => {
-  const { pickUpDateTime } = req.query;
-  console.log(req.query, 'now');
+  // const { pickUpDateTime } = req.query;
+  // console.log(req.query, 'now');
 
-  const data = await VehicleService.availableVehicles(pickUpDateTime as string);
+  console.log('hi');
+
+  const data = await VehicleService.availableVehicles();
   sendResponse<Vehicle[]>(res, {
     statusCode: 200,
     success: true,
@@ -55,6 +57,16 @@ const getVehicles = catchAsync(async (req: Request, res: Response) => {
     data,
   });
 });
+const getAllVehicles = catchAsync(async (req: Request, res: Response) => {
+  const { data } = await VehicleService.getAllVehicles();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Vehicles retrieved successfully',
+    data,
+  });
+});
 
 const updateVehicle = catchAsync(async (req: Request, res: Response) => {
   const data = await VehicleService.updateVehicle(req.params.id, req.body);
@@ -73,4 +85,5 @@ export const VehicleController = {
   getVehicles,
   updateVehicle,
   availableVehicles,
+  getAllVehicles,
 };

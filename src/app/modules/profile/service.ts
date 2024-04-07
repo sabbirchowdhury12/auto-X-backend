@@ -6,7 +6,7 @@ const updateProfile = async (
   payload: Partial<Profile>,
 ): Promise<Profile> => {
   const profile = await prisma.profile.update({
-    where: { id },
+    where: { userId: id },
     data: payload,
   });
 

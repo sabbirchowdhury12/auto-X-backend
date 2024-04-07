@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Booking, Prisma } from '@prisma/client';
 import prisma from '../../../constants/prisma';
@@ -28,13 +30,29 @@ const createBooking = async (data: Booking): Promise<Booking> => {
 
   if (!booking) throw new ApiError(400, 'Failed to create booking!');
 
+  await prisma.vehicle.update({
+    where: { id: data.vehicleId },
+    data: { status: 'In_A_Trip' },
+  });
+
   return booking;
 };
 
 const getBooking = async (id: string): Promise<Booking> => {
   const booking = await prisma.booking.findUnique({
     where: { id },
-    include: { user: true, driver: true, vehicle: true },
+    include: {
+      user: {
+        include: {
+          profile: true,
+        },
+      },
+      vehicle: {
+        include: {
+          driver: true,
+        },
+      },
+    },
   });
 
   if (!booking) throw new ApiError(404, 'Booking not found!');

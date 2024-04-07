@@ -1,4 +1,4 @@
-import { EBookingStatus, EPaymentStatus, ERentType } from '@prisma/client';
+import { EBookingStatus, EPaymentStatus } from '@prisma/client';
 import { z } from 'zod';
 
 const ZCreateBooking = z.object({
@@ -15,8 +15,8 @@ const ZCreateBooking = z.object({
     dropOffLocation: z.string({
       required_error: 'Drop off location is required!',
     }),
-    rentType: z.enum([...Object.keys(ERentType)] as [string, ...string[]], {
-      required_error: 'Rent type is required!',
+    pickUpTime: z.string({
+      required_error: 'Pick up time is required!',
     }),
     bookingStatus: z
       .enum([...Object.keys(EBookingStatus)] as [string, ...string[]])
@@ -26,10 +26,8 @@ const ZCreateBooking = z.object({
       .enum([...Object.keys(EPaymentStatus)] as [string, ...string[]])
       .default(EPaymentStatus.Unpaid)
       .optional(),
-    driverId: z.string({ required_error: 'Driver id is required!' }),
     vehicleId: z.string({ required_error: 'Vehicle id is required!' }),
     userId: z.string({ required_error: 'User id is required!' }),
-    promoId: z.string().optional(),
   }),
 });
 
@@ -39,9 +37,6 @@ const ZUpdateBooking = z.object({
     returnDateTime: z.string().optional(),
     pickUpLocation: z.string().optional(),
     dropOffLocation: z.string().optional(),
-    rentType: z
-      .enum([...Object.keys(ERentType)] as [string, ...string[]])
-      .optional(),
     bookingStatus: z
       .enum([...Object.keys(EBookingStatus)] as [string, ...string[]])
       .optional(),

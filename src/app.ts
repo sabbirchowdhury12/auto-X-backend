@@ -10,7 +10,7 @@ const app: Application = express();
 // Middlewares
 app.use(
   cors({
-    origin: ['https://autox-bay.vercel.app', 'http://localhost:3000'],
+    origin: ['http://localhost:3000'],
     credentials: true,
   }),
 );

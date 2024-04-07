@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { EGender } from '@prisma/client';
+import { z } from 'zod';
 
 const ZProfileUpdate = z.object({
   body: z.object({
@@ -11,7 +11,7 @@ const ZProfileUpdate = z.object({
     image: z.string().optional(),
     contactNo: z.string().optional(),
     emergContact: z.string().optional(),
-    dateOfBirth: z.date().optional(),
+    dateOfBirth: z.string().optional(),
   }),
 });
 
