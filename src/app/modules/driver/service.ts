@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Driver, ERole } from '@prisma/client';
 import prisma from '../../../constants/prisma';
 import ApiError from '../../../errors/ApiError';
@@ -50,29 +52,29 @@ const createDriver = async ({
   return result;
 };
 
-const availableDrivers = async (date: string): Promise<Driver[]> => {
+const availableDrivers = async (date: string) => {
   // Query all booked drivers for the provided date
-  const bookedDriverIds = (
-    await prisma.booking.findMany({
-      where: {
-        pickUpDateTime: date,
-      },
-      select: {
-        driverId: true,
-      },
-    })
-  ).map(booking => booking.driverId);
+  // const bookedDriverIds = (
+  //   await prisma.booking.findMany({
+  //     where: {
+  //       pickUpDateTime: date,
+  //     },
+  //     select: {
+  //       driverId: true,
+  //     },
+  //   })
+  // ).map(booking => booking.driverId);
 
-  // Query available drivers by excluding booked drivers
-  const availableDrivers = await prisma.driver.findMany({
-    where: {
-      id: {
-        notIn: bookedDriverIds,
-      },
-    },
-  });
+  // // Query available drivers by excluding booked drivers
+  // const availableDrivers = await prisma.driver.findMany({
+  //   where: {
+  //     id: {
+  //       notIn: bookedDriverIds,
+  //     },
+  //   },
+  // });
 
-  return availableDrivers;
+  return null;
 };
 
 const getDrivers = async () => {
