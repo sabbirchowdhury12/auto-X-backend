@@ -21,7 +21,7 @@ const routes_1 = require("./app/routes");
 const app = (0, express_1.default)();
 // Middlewares
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://autox-frontend.vercel.app'],
     credentials: true,
 }));
 app.use((0, cookie_parser_1.default)());

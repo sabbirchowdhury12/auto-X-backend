@@ -19,7 +19,7 @@ router
     updateProfile,
   )
   .delete('/:id', auth(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), deleteProfile)
-  .get('/:id', auth(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), getProfile)
-  .get('/', auth(ADMIN, SUPER_ADMIN), getProfiles);
+  .get('/:id', getProfile)
+  .get('/', getProfiles);
 
 export const ProfileRoutes = router;

@@ -17,6 +17,6 @@ const { getProfile, getProfiles, deleteProfile, updateProfile } = controller_1.P
 router
     .patch('/:id', (0, auth_1.default)(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), (0, validateRequest_1.default)(ZProfileUpdate), updateProfile)
     .delete('/:id', (0, auth_1.default)(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), deleteProfile)
-    .get('/:id', (0, auth_1.default)(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), getProfile)
-    .get('/', (0, auth_1.default)(ADMIN, SUPER_ADMIN), getProfiles);
+    .get('/:id', getProfile)
+    .get('/', getProfiles);
 exports.ProfileRoutes = router;

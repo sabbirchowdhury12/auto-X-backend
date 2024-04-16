@@ -33,8 +33,6 @@ const availableVehicles = catchAsync(async (req: Request, res: Response) => {
   // const { pickUpDateTime } = req.query;
   // console.log(req.query, 'now');
 
-  console.log('hi');
-
   const data = await VehicleService.availableVehicles();
   sendResponse<Vehicle[]>(res, {
     statusCode: 200,

@@ -41,7 +41,6 @@ const getVehicle = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
 const availableVehicles = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // const { pickUpDateTime } = req.query;
     // console.log(req.query, 'now');
-    console.log('hi');
     const data = yield service_1.VehicleService.availableVehicles();
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
