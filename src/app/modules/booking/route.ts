@@ -20,7 +20,8 @@ router
     updateBooking,
   )
   .delete('/:id', auth(ADMIN, SUPER_ADMIN), deleteBooking)
-  .get('/:id', auth(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), getBooking)
-  .get('/', auth(ADMIN, SUPER_ADMIN), getBookings);
+  .get('/', auth(ADMIN, SUPER_ADMIN, CUSTOMER), getBookings)
+
+  .get('/:id', auth(CUSTOMER, DRIVER, ADMIN, SUPER_ADMIN), getBooking);
 
 export const BookingRoutes = router;

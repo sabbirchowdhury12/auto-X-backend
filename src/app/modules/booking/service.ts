@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Booking, Prisma } from '@prisma/client';
+import { JwtPayload } from 'jsonwebtoken';
 import prisma from '../../../constants/prisma';
 import ApiError from '../../../errors/ApiError';
 import { calculatePagination } from '../../../helpers/pagination';
@@ -61,11 +62,18 @@ const getBooking = async (id: string): Promise<Booking> => {
 };
 
 const getBookings = async (
+  user: JwtPayload | undefined,
   { searchTerm, ...filterData }: TBookingFilterRequest,
   options: IPaginationOptions,
 ): Promise<IGenericResponse<Booking[]>> => {
   const pipeline = [];
   const { limit, page, skip } = calculatePagination(options);
+
+  if (user?.role === 'CUSTOMER') {
+    pipeline.push({
+      userId: user.id,
+    });
+  }
 
   if (searchTerm) {
     pipeline.push({

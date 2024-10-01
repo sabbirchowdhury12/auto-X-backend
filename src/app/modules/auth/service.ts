@@ -60,11 +60,12 @@ const register = async ({
 };
 
 const changePassword = async ({
-  email,
+  id,
   oldPassword,
   newPassword,
 }: TChangePassword) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { id } });
+  console.log(user);
 
   if (!user) throw new ApiError(404, 'User not found!');
 
@@ -74,10 +75,11 @@ const changePassword = async ({
 
   newPassword = await hashPassword(newPassword);
 
-  await prisma.user.update({
-    where: { email },
+  const result = await prisma.user.update({
+    where: { id },
     data: { password: newPassword },
   });
+  console.log(result);
 };
 
 export const AuthService = { login, register, changePassword };

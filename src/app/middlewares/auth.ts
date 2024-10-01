@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { Secret } from 'jsonwebtoken';
+import { JwtPayload, Secret } from 'jsonwebtoken';
 import config from '../../config';
 import ApiError from '../../errors/ApiError';
 import { verifyToken } from '../../helpers/jwt';
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      user: JwtPayload;
+    }
+  }
+}
 
 const auth =
   (...requiredRoles: string[]) =>
@@ -21,7 +31,7 @@ const auth =
       req.user = verifiedUser;
 
       if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized Access!');
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized Access!!');
       }
 
       next();

@@ -32,9 +32,13 @@ const getBooking = catchAsync(async (req: Request, res: Response) => {
 const getBookings = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookingFilterableFields);
   const options = pick(req.query, paginationFields);
+  const user = req.user;
 
-  const { meta, data } = await BookingService.getBookings(filters, options);
-
+  const { meta, data } = await BookingService.getBookings(
+    user,
+    filters,
+    options,
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,

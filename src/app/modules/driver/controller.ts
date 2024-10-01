@@ -8,8 +8,6 @@ import { DriverService } from './service';
 const createDriver = catchAsync(async (req: Request, res: Response) => {
   const data = await DriverService.createDriver(req.body);
 
-  console.log(data);
-
   sendResponse<TCreateDriverResponse>(res, {
     statusCode: 201,
     success: true,

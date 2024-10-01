@@ -21,7 +21,7 @@ type TRegister = {
 };
 
 type TChangePassword = {
-  email: string;
+  id: string;
   oldPassword: string;
   newPassword: string;
 };

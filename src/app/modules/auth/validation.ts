@@ -20,7 +20,7 @@ const ZRegister = z.object({
 
 const ZChangePassword = z.object({
   body: z.object({
-    email: z.string({ required_error: 'Email is required!' }),
+    id: z.string({ required_error: 'User id is required!' }),
     oldPassword: z.string({ required_error: 'Old password is required!' }),
     newPassword: z.string({ required_error: 'New password is required!' }),
   }),

@@ -122,12 +122,11 @@ const deleteDriver = async (id: string): Promise<Driver> => {
     const deletedProfile = await prisma.profile.delete({
       where: { id: usr?.profile?.id },
     });
-    console.log(deletedProfile);
   }
 
   const result = await prisma.driver.delete({ where: { id } });
   const deletedUser = await prisma.user.delete({ where: { id: usr?.id } });
-  console.log(deletedUser);
+
   return result;
 };
 
